@@ -27,14 +27,14 @@ let command = args.shift().toLowerCase();
 if(command === 'say') {
 message.channel.send(args.join(" "));
 } else if(command === 'kick') {
-let kicked = message.mentions.users.first() || message.guild.members.get(args.join(" "));
+let kicked = message.mentions.users.first();
 if(!message.member.hasPermission('KICK_MEMBERS')) return message.channel.send('You don\'t have permission to kick members.');
 if(!kicked) return message.channel.send('Please provide someone to kick.');
 
-if(!kicked.kickable) return message.channel.send('They have a higher role/administrator or i don\'t have permissions to kick.');
+if(!message.guild.member(kicked).kickable) return message.channel.send('They have a higher role/administrator or i don\'t have permissions to kick.');
 let reason = args.slice(kicked.length).join(" ");
 
-await kicked.kick(reason)
+await message.guild.member(kicked).kick(reason)
 .catch(error => message.channel.send(`Sorry ${message.author} I couldn't kick because of : ${error}`));
 message.channel.send(`${kicked.user.tag} has been kicked by ${message.author.tag} because: ${reason}`);
 
@@ -44,7 +44,7 @@ if(!message.member.hasPermission('BAN_MEMBERS')) return message.channel.send('Yo
 let member = message.mentions.members.first();
 if(!member) return message.reply("Please mention a valid member of this server");
 if(!member.bannable) return message.reply("They have a higher role/administrator or i don\'t have permissions to ban.");
-let reason = args.slice(1).join(' ');
+let reason = args.slice(member).join(' ');
 if(!reason) reason = "No reason provided";
 await member.ban(reason)
 .catch(error => message.channel.send(`Sorry ${message.author} I couldn't ban because of : ${error}`));
