@@ -9,11 +9,11 @@ client.user.setActivity(`${client.guilds.size} servers. s!help`)
 });
 
 client.on("guildCreate", guild => {
-console.log(`New guild joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`);
+client.channels.get('517912350435835904').send(`New guild joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`);
 client.user.setActivity(`${client.guilds.size} servers. s!help`);
 });
 client.on("guildDelete", guild => {
-console.log(`Left a guild: ${guild.name} (id: ${guild.id}).`);
+client.channels.get('517912350435835904').send(`Left a guild: ${guild.name} (id: ${guild.id}).`);
 client.user.setActivity(`${client.guilds.size} servers. s!help`);
 });
 
